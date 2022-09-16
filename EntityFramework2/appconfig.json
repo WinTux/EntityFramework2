@@ -9,5 +9,6 @@
   ],
   "ConnectionStrings": {
     "miConexion": "Server=192.168.1.253;DataBase=Instituto X;User=Pepe;Password=123456"
-  } 
+  },
+  "edad" :  56
 }
