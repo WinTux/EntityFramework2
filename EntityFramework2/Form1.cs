@@ -17,5 +17,14 @@ namespace EntityFramework2
             InitializeComponent();
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var ddbb = new GestionEmpresaXDB();
+            var telefonos = ddbb.Telefonos.ToList();
+            string listaT = "";
+            foreach (var t in telefonos)
+                listaT += $"ID: {t.idTelefono}, Nombre completo: {t.estudiante.nombre} {t.estudiante.apellido}; num: {t.numero}\n";
+            label1.Text = listaT;
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace EntityFramework2
                 var builder = new ConfigurationBuilder()
                     .SetBasePath(Directory.GetCurrentDirectory()).AddJsonFile("appconfig.json");
                 var conf = builder.Build();
-                opBuilder.UseSqlServer(conf["ConnectionStrings:miConexion"]);
+                opBuilder.UseLazyLoadingProxies().UseSqlServer(conf["ConnectionStrings:miConexion"]);
             }
         }
 
