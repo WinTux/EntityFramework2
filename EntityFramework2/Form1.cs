@@ -255,5 +255,89 @@ namespace EntityFramework2
             
 
         }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                var suma = ddbb.MateriasCursadas.Sum(mc => mc.calificacion);
+                //suma = ddbb.MateriasCursadas.Where(mm => mm.idEst == 123).Sum(mc => mc.calificacion);
+                label24.Text = "Sumatoria: " + suma;
+            }
+        }
+
+        private void button17_Click(object sender, EventArgs e)
+        {
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                //var cant = ddbb.MateriasCursadas.Count();
+                var cant = ddbb.MateriasCursadas.Count(mc => mc.calificacion > 50);
+                label24.Text = "Cantidad: " + cant;
+            }
+        }
+
+        private void button18_Click(object sender, EventArgs e)
+        {
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                var min = ddbb.MateriasCursadas.Min(mc => mc.calificacion);
+                label24.Text = "Nota mínima: " + min;
+            }
+        }
+
+        private void button19_Click(object sender, EventArgs e)
+        {
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                var max = ddbb.MateriasCursadas.Max(mc => mc.calificacion);
+                label24.Text = "Nota máxima: " + max;
+            }
+        }
+
+        private void button20_Click(object sender, EventArgs e)
+        {
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                var avg = ddbb.MateriasCursadas.Average(mc => mc.calificacion);
+                label24.Text = "Nota promedio: " + avg;
+            }
+        }
+
+        private void button21_Click(object sender, EventArgs e)
+        {
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                var estudiantes = ddbb.Estudiantes
+                    .Where(es => es.fecha_nac.Year > 1999 && es.fecha_nac.Month == 12 && es.fecha_nac.Day > 2)
+                    .ToList();
+                string listaT = "";
+                foreach (var es in estudiantes)
+                    listaT += $"Nac.: {es.fecha_nac.ToString("dd-MM-yyyy")}\n";
+                label24.Text = "Fechas que cumplen:\n " + listaT;
+            }
+        }
+
+        private void button22_Click(object sender, EventArgs e)
+        {
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                var listaNueva = ddbb.Estudiantes.Join(
+                        ddbb.Telefonos,
+                        est => est.ci,//PK
+                        tel => tel.codigoEst,//FK
+                        (est, tel) => new { 
+                            carnet = est.ci,
+                            nom = est.nombre,
+                            ap = est.apellido,
+                            num = tel.numero
+                        }
+                ).ToList();
+                var res = listaNueva.Where(x => x.num > 100).ToList();
+                string listaT = "";
+                foreach (var es in listaNueva)
+                    listaT += $"Nom: {es.nom} {es.ap} ({es.carnet}) - Telf.: {es.num}\n";
+                label24.Text = "Fechas que cumplen:\n " + listaT;
+            }
+        }
     }
 }

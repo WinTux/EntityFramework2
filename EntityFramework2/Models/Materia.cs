@@ -14,5 +14,9 @@ namespace EntityFramework2.Models
         public string nombre { get; set; }
         public string descripcion { get; set; }
         public virtual ICollection<MateriaCursada> materiasCursadas { get; set; }
+
+        public Materia() { 
+            materiasCursadas = new HashSet<MateriaCursada>();
+        }
     }
 }
