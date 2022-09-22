@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.ComponentModel.Design.ObjectSelectorEditor;
 
 namespace EntityFramework2
 {
@@ -87,8 +88,31 @@ namespace EntityFramework2
                 ddbb.Remove(est);
                 //guardamos
                 ddbb.SaveChanges();
+
+                /* 
+                //Otra forma de realizarlo
+                var estudiante = ddbb.Estudiantes.SingleOrDefault(es => es.ci == 777);
+                ddbb.Estudiantes.Remove(estudiante);
+                ddbb.SaveChanges();
+                */
             }
             label10.Text = $"Estudiante {ci} eliminado";
+
+
+        }
+
+        //Método no utilizado pero funcional.
+        private void modificar_estudiante(object sender, EventArgs e) {
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                
+                //Otra forma de realizarlo
+                var estudiante = ddbb.Estudiantes.SingleOrDefault(es => es.ci == 777);
+                estudiante.nombre = "Ana";
+                estudiante.apellido = "Sosa";
+                ddbb.SaveChanges();
+                
+            }
         }
 
         private void button6_Click(object sender, EventArgs e)
@@ -167,6 +191,15 @@ namespace EntityFramework2
                 foreach (var es in lista)
                     listaT += $"Nombre completo: {es.nombre} {es.apellido}\n";
                 label16.Text = listaT;
+                /*
+                //Ordenamiento con multiples campos
+                //En SQL es: SELECt * FROM estudiante ORDER BY apellido, nombre, fecha_nac;
+                lista = ddbb.Estudiantes
+                    .OrderBy(estu => estu.apellido)
+                    .ThenBy(estu => estu.nombre)
+                    .ThenBy(estu => estu.fecha_nac)
+                    .ToList();
+                */
             }
         }
 
@@ -182,6 +215,8 @@ namespace EntityFramework2
                 foreach (var es in lista)
                     listaT += $"Nombre completo: {es.nombre} {es.apellido}\n";
                 label16.Text = listaT;
+
+
             }
         }
 
@@ -204,7 +239,7 @@ namespace EntityFramework2
         private void button13_Click(object sender, EventArgs e)
         {
             int cant = int.Parse(textBox8.Text);
-            //Uso de LIKE
+            //Uso de LIMIT
             using (var ddbb = new GestionEmpresaXDB())
             {
                 var lista = ddbb.Estudiantes
@@ -319,6 +354,7 @@ namespace EntityFramework2
 
         private void button22_Click(object sender, EventArgs e)
         {
+            //Uso de JOIN
             using (var ddbb = new GestionEmpresaXDB())
             {
                 var listaNueva = ddbb.Estudiantes.Join(
@@ -337,6 +373,63 @@ namespace EntityFramework2
                 foreach (var es in listaNueva)
                     listaT += $"Nom: {es.nom} {es.ap} ({es.carnet}) - Telf.: {es.num}\n";
                 label24.Text = "Fechas que cumplen:\n " + listaT;
+
+                /*
+                //Con condiciones
+                listaNueva = ddbb.Estudiantes.Join(
+                        ddbb.Telefonos,
+                        est => est.ci,//PK
+                        tel => tel.codigoEst,//FK
+                        (est, tel) => new {
+                            carnet = est.ci,
+                            nom = est.nombre,
+                            ap = est.apellido,
+                            num = tel.numero
+                        }
+                ).Where(est => est.carnet > 200).ToList();
+                */
+            }
+        }
+
+        private void button23_Click(object sender, EventArgs e)
+        {
+            //Vamos a representar la consulta SQL: 
+            //SELECT idEst, COUNT(*), MIN(calificacion), MAX(calificacion), AVG(calificacion) FROM desarrollo.materia_cursada GROUP BY idEst;
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                var grupos = ddbb.MateriasCursadas
+                    .GroupBy(mc => mc.idEst)
+                    .Select(gr => new
+                    {
+                        Est = gr.Key,
+                        Cantidad = gr.Count(),
+                        Menor = gr.Min(mmcc => mmcc.calificacion),
+                        Mayor = gr.Max(mmcc => mmcc.calificacion),
+                        Promedio = gr.Average(mmcc => mmcc.calificacion)
+                    }).ToList();
+                string listaT = "";
+                foreach (var grupo in grupos)
+                    listaT += $"Nom.: {grupo.Est}, Cant {grupo.Cantidad}" +
+                        $", Min:{grupo.Menor}, Max:{grupo.Mayor}->{grupo.Promedio}\n";
+                label24.Text = listaT;
+
+                /*
+                //SELECT 
+                //    idEst,COUNT(*),  MIN(calificacion), MAX(calificacion), AVG(calificacion)
+                //FROM
+                //    desarrollo.materia_cursada
+                //GROUP BY idEst HAVING AVG(calificacion) > 85;
+                grupos = ddbb.MateriasCursadas
+                    .GroupBy(mc => mc.idEst)
+                    .Select(gr => new
+                    {
+                        Est = gr.Key,
+                        Cantidad = gr.Count(),
+                        Menor = gr.Min(mmcc => mmcc.calificacion),
+                        Mayor = gr.Max(mmcc => mmcc.calificacion),
+                        Promedio = gr.Average(mmcc => mmcc.calificacion)
+                    }).Where(gr => gr.Promedio > 85).ToList();
+                */
             }
         }
     }

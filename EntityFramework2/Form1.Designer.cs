@@ -78,6 +78,7 @@
             this.button15 = new System.Windows.Forms.Button();
             this.label23 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button22 = new System.Windows.Forms.Button();
             this.button21 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
             this.button19 = new System.Windows.Forms.Button();
@@ -85,7 +86,7 @@
             this.button17 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
             this.label24 = new System.Windows.Forms.Label();
-            this.button22 = new System.Windows.Forms.Button();
+            this.button23 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -541,6 +542,7 @@
             // 
             // groupBox3
             // 
+            this.groupBox3.Controls.Add(this.button23);
             this.groupBox3.Controls.Add(this.button22);
             this.groupBox3.Controls.Add(this.button21);
             this.groupBox3.Controls.Add(this.button20);
@@ -555,6 +557,16 @@
             this.groupBox3.TabIndex = 31;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Func. de agregación";
+            // 
+            // button22
+            // 
+            this.button22.Location = new System.Drawing.Point(17, 122);
+            this.button22.Name = "button22";
+            this.button22.Size = new System.Drawing.Size(75, 23);
+            this.button22.TabIndex = 7;
+            this.button22.Text = "JOIN";
+            this.button22.UseVisualStyleBackColor = true;
+            this.button22.Click += new System.EventHandler(this.button22_Click);
             // 
             // button21
             // 
@@ -619,21 +631,21 @@
             // label24
             // 
             this.label24.AutoSize = true;
-            this.label24.Location = new System.Drawing.Point(19, 252);
+            this.label24.Location = new System.Drawing.Point(17, 208);
             this.label24.Name = "label24";
             this.label24.Size = new System.Drawing.Size(62, 15);
             this.label24.TabIndex = 0;
             this.label24.Text = "Resultado:";
             // 
-            // button22
+            // button23
             // 
-            this.button22.Location = new System.Drawing.Point(17, 122);
-            this.button22.Name = "button22";
-            this.button22.Size = new System.Drawing.Size(75, 23);
-            this.button22.TabIndex = 7;
-            this.button22.Text = "JOIN";
-            this.button22.UseVisualStyleBackColor = true;
-            this.button22.Click += new System.EventHandler(this.button22_Click);
+            this.button23.Location = new System.Drawing.Point(112, 122);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(75, 23);
+            this.button23.TabIndex = 8;
+            this.button23.Text = "button23";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
             // 
             // Form1
             // 
@@ -753,5 +765,6 @@
         private System.Windows.Forms.Button button20;
         private System.Windows.Forms.Button button21;
         private System.Windows.Forms.Button button22;
+        private System.Windows.Forms.Button button23;
     }
 }
