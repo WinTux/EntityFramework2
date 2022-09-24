@@ -73,7 +73,77 @@ namespace EntityFramework2
                 ddbb.SaveChanges();
             }
             label8.Text = $"Numero {num} creado";
-            
+
+            /*
+             Insertando varios registros
+             */
+
+            //Primera opción
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                List<Estudiante> estudiantes = new List<Estudiante> { 
+                    new Estudiante{ ci= 789, nombre = "Pedro", apellido="Perales"},
+                    new Estudiante{ ci= 780, nombre = "Rocio", apellido="Mora"},
+                    new Estudiante{ ci= 679, nombre = "Rebeca", apellido="Peralta"}
+                };
+                ddbb.AddRange(estudiantes);
+                //guardamos
+                ddbb.SaveChanges();
+            }
+
+            //Segunda opción
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+
+                Estudiante es1 = new Estudiante { ci = 789, nombre = "Pedro", apellido = "Perales" };
+                Estudiante es2 = new Estudiante { ci = 780, nombre = "Rocio", apellido = "Mora" };
+                Estudiante es3 = new Estudiante { ci = 679, nombre = "Rebeca", apellido = "Peralta" };
+                Telefono telf1 = new Telefono { codigoEst = 123, numero = 620123 };
+                
+                ddbb.AddRange(es1, es2, telf1 , es3);
+                //guardamos
+                ddbb.SaveChanges();
+            }
+
+            //Inserción multiple (varios registros de varias tablas relacionadas)
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                Estudiante est = new Estudiante {
+                    ci = 789, 
+                    nombre = "Pedro", 
+                    apellido = "Perales",
+                    email = "pedro@yahoo.com",
+                    telefonos = new List<Telefono>{
+                        new Telefono { numero = 620123 },
+                        new Telefono { numero = 620123 }
+                    }
+                };
+                
+                ddbb.Add<Estudiante>(est);//Se puede omitir la especificación del tipo <Estudiante>
+                //guardamos
+                ddbb.SaveChanges();
+            }
+
+            //Ejemplo INCORRECTO
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                Estudiante est = new Estudiante
+                {
+                    ci = 789,
+                    nombre = "Pedro",
+                    apellido = "Perales",
+                    email = "pedro@yahoo.com",
+                    
+                };
+                Telefono tlf1 = new Telefono {estudiante = est, numero = 620123 };
+                Telefono tlf2 = new Telefono {estudiante = est, numero = 620123 };
+                    
+                ddbb.Add<Estudiante>(est);//Se puede omitir la especificación del tipo <Estudiante>
+                //guardamos
+                ddbb.SaveChanges();
+            }
+
+
         }
 
         private void button5_Click(object sender, EventArgs e)
