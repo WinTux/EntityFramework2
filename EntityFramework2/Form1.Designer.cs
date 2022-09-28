@@ -78,6 +78,7 @@
             this.button15 = new System.Windows.Forms.Button();
             this.label23 = new System.Windows.Forms.Label();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.button23 = new System.Windows.Forms.Button();
             this.button22 = new System.Windows.Forms.Button();
             this.button21 = new System.Windows.Forms.Button();
             this.button20 = new System.Windows.Forms.Button();
@@ -86,10 +87,16 @@
             this.button17 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
             this.label24 = new System.Windows.Forms.Label();
-            this.button23 = new System.Windows.Forms.Button();
+            this.groupBox4 = new System.Windows.Forms.GroupBox();
+            this.label25 = new System.Windows.Forms.Label();
+            this.button26 = new System.Windows.Forms.Button();
+            this.button25 = new System.Windows.Forms.Button();
+            this.button24 = new System.Windows.Forms.Button();
+            this.button27 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
+            this.groupBox4.SuspendLayout();
             this.SuspendLayout();
             // 
             // button1
@@ -558,6 +565,16 @@
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Func. de agregación";
             // 
+            // button23
+            // 
+            this.button23.Location = new System.Drawing.Point(112, 122);
+            this.button23.Name = "button23";
+            this.button23.Size = new System.Drawing.Size(75, 23);
+            this.button23.TabIndex = 8;
+            this.button23.Text = "button23";
+            this.button23.UseVisualStyleBackColor = true;
+            this.button23.Click += new System.EventHandler(this.button23_Click);
+            // 
             // button22
             // 
             this.button22.Location = new System.Drawing.Point(17, 122);
@@ -637,21 +654,75 @@
             this.label24.TabIndex = 0;
             this.label24.Text = "Resultado:";
             // 
-            // button23
+            // groupBox4
             // 
-            this.button23.Location = new System.Drawing.Point(112, 122);
-            this.button23.Name = "button23";
-            this.button23.Size = new System.Drawing.Size(75, 23);
-            this.button23.TabIndex = 8;
-            this.button23.Text = "button23";
-            this.button23.UseVisualStyleBackColor = true;
-            this.button23.Click += new System.EventHandler(this.button23_Click);
+            this.groupBox4.Controls.Add(this.button27);
+            this.groupBox4.Controls.Add(this.label25);
+            this.groupBox4.Controls.Add(this.button26);
+            this.groupBox4.Controls.Add(this.button25);
+            this.groupBox4.Controls.Add(this.button24);
+            this.groupBox4.Location = new System.Drawing.Point(1012, 21);
+            this.groupBox4.Name = "groupBox4";
+            this.groupBox4.Size = new System.Drawing.Size(162, 318);
+            this.groupBox4.TabIndex = 32;
+            this.groupBox4.TabStop = false;
+            this.groupBox4.Text = "groupBox4";
+            // 
+            // label25
+            // 
+            this.label25.AutoSize = true;
+            this.label25.Location = new System.Drawing.Point(2, 177);
+            this.label25.Name = "label25";
+            this.label25.Size = new System.Drawing.Size(44, 15);
+            this.label25.TabIndex = 3;
+            this.label25.Text = "label25";
+            // 
+            // button26
+            // 
+            this.button26.Location = new System.Drawing.Point(24, 84);
+            this.button26.Name = "button26";
+            this.button26.Size = new System.Drawing.Size(75, 23);
+            this.button26.TabIndex = 2;
+            this.button26.Text = "Deleted";
+            this.button26.UseVisualStyleBackColor = true;
+            this.button26.Click += new System.EventHandler(this.EjemploEstadoDeletedDetached);
+            // 
+            // button25
+            // 
+            this.button25.Location = new System.Drawing.Point(24, 53);
+            this.button25.Name = "button25";
+            this.button25.Size = new System.Drawing.Size(75, 23);
+            this.button25.TabIndex = 1;
+            this.button25.Text = "Modified";
+            this.button25.UseVisualStyleBackColor = true;
+            this.button25.Click += new System.EventHandler(this.EjemploEstadoModified);
+            // 
+            // button24
+            // 
+            this.button24.Location = new System.Drawing.Point(24, 22);
+            this.button24.Name = "button24";
+            this.button24.Size = new System.Drawing.Size(75, 23);
+            this.button24.TabIndex = 0;
+            this.button24.Text = "Added";
+            this.button24.UseVisualStyleBackColor = true;
+            this.button24.Click += new System.EventHandler(this.EjemploEstadoAdded);
+            // 
+            // button27
+            // 
+            this.button27.Location = new System.Drawing.Point(24, 113);
+            this.button27.Name = "button27";
+            this.button27.Size = new System.Drawing.Size(75, 23);
+            this.button27.TabIndex = 4;
+            this.button27.Text = "Attach";
+            this.button27.UseVisualStyleBackColor = true;
+            this.button27.Click += new System.EventHandler(this.EjemploAttach);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1008, 450);
+            this.ClientSize = new System.Drawing.Size(1186, 450);
+            this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.label23);
             this.Controls.Add(this.button15);
@@ -700,6 +771,8 @@
             this.groupBox2.PerformLayout();
             this.groupBox3.ResumeLayout(false);
             this.groupBox3.PerformLayout();
+            this.groupBox4.ResumeLayout(false);
+            this.groupBox4.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -766,5 +839,11 @@
         private System.Windows.Forms.Button button21;
         private System.Windows.Forms.Button button22;
         private System.Windows.Forms.Button button23;
+        private System.Windows.Forms.GroupBox groupBox4;
+        private System.Windows.Forms.Button button26;
+        private System.Windows.Forms.Button button25;
+        private System.Windows.Forms.Button button24;
+        private System.Windows.Forms.Label label25;
+        private System.Windows.Forms.Button button27;
     }
 }

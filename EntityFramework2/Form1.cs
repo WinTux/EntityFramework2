@@ -502,5 +502,102 @@ namespace EntityFramework2
                 */
             }
         }
+        private void EjemploEstadoAdded(object sender, EventArgs e)
+        {
+            /*
+             Added, Deleted, Modified, Unchanged, Detached
+
+             */
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+
+                Estudiante est = new Estudiante { 
+                    ci = 4546,
+                    nombre = "Arturo",
+                    apellido = "Salamanca"
+                };
+                ddbb.Add(est);
+                label25.Text =$"Estado antes de SavaChanges:\n" +
+                    $" {ddbb.Entry(est).State}";
+                ddbb.SaveChanges();
+                label25.Text += "\n" + $"Estado después de SavaChanges:\n" +
+                    $" {ddbb.Entry(est).State}";
+            }
+        }
+
+        private void EjemploEstadoModified(object sender, EventArgs e)
+        {
+            /*
+              Modified
+
+             */
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+
+                Estudiante est = ddbb.Estudiantes
+                    .Where(es => es.apellido == "Perales").FirstOrDefault();
+                est.email = "peperales@yahoo.com";
+                est.direccion = "Z. Los perales C. 24";
+                label25.Text = $"Estado antes de SavaChanges:\n" +
+                    $" {ddbb.Entry(est).State}";
+                ddbb.SaveChanges();
+                label25.Text += "\n" + $"Estado después de SavaChanges:\n" +
+                    $" {ddbb.Entry(est).State}";
+            }
+        }
+        private void EjemploEstadoDeletedDetached(object sender, EventArgs e)
+        {
+            /*
+             Deleted, Detached
+
+             */
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                Estudiante est = ddbb.Estudiantes
+                    .Where(es => es.ci == 6969).FirstOrDefault();
+                ddbb.Remove(est);
+                label25.Text = $"Estado antes de SavaChanges:\n" +
+                    $" {ddbb.Entry(est).State}";
+                ddbb.SaveChanges();
+                label25.Text += "\n" + $"Estado después de SavaChanges:\n" +
+                    $" {ddbb.Entry(est).State}";
+            }
+        }
+
+        private void EjemploAttach(object sender, EventArgs e)
+        {
+            /*
+             Attach (vincular)
+
+             */
+            Estudiante e1 = new Estudiante
+            {
+                ci = 787878,
+                nombre = "Samanta",
+                apellido = "Saavedra"
+            };
+            Estudiante e2 = new Estudiante
+            {
+                nombre = "Ruth",
+                apellido = "Mora"
+            };
+            using (var ddbb = new GestionEmpresaXDB())
+            {
+                label25.Text = $"[e1] Estado antes de Attach:\n" +
+                    $" {ddbb.Entry(e1).State}";
+                label25.Text +="\n" + $"[e2] Estado antes de Attach:\n" +
+                    $" {ddbb.Entry(e2).State}";
+                ddbb.Attach(e1);
+                ddbb.Attach(e2);
+                label25.Text += "\n"+ $"[e1] Estado después de Attach:\n" +
+                    $" {ddbb.Entry(e1).State}";
+                label25.Text += "\n"+ $"[e2] Estado después de Attach:\n" +
+                    $" {ddbb.Entry(e2).State}";
+
+                //Para cambiar el estado, de una entidad, manualmente
+                ddbb.Entry(e1).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+                ddbb.Entry(e2).State = Microsoft.EntityFrameworkCore.EntityState.Detached;
+            }
+        }
     }
 }
